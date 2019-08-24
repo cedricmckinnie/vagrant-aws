@@ -13,8 +13,9 @@ module VagrantPlugins
         end
 
         def call(env)
-          if elb_name = env[:machine].provider_config.elb
-            deregister_instance env, elb_name, env[:machine].id
+          if tg_name = env[:machine].provider_config.target_group
+            elb_name = env[:machine].provider_config.elb
+            deregister_instance env, elb_name, env[:machine].id, tg_name
           end
           @app.call(env)
         end
